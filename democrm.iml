@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql:mysql-connector-java:8.0.23" level="project" />
-    <orderEntry type="library" name="poi:poi:3.0-FINAL" level="project" />
+    <orderEntry type="library" name="fr.opensagres.xdocreport:fr.opensagres.poi.xwpf.converter.core:2.0.2" level="project" />
   </component>
 </module>

@@ -1,5 +1,7 @@
 package forms;
 
+import createTeam.ChoseDevForm;
+import createTeam.ChosePmForm;
 import executorsForms.CreateExecutor;
 import utilities.configFiles.FormConfig;
 import utilities.tables.ExecutorsTable;
@@ -9,6 +11,7 @@ import utilities.tables.UsersTable;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class MainForm extends JFrame{
     private JPanel panel1;
@@ -24,7 +27,8 @@ public class MainForm extends JFrame{
     private JButton редактироватьИсполнителяButton;
     private JButton назначитьВКомандуButton;
     private JButton посмотретьДанныеButton1;
-    private JButton посмотретьДеталиButton;
+    private JButton showDetailsTaskBtn;
+    private JButton createTeamBtn;
 
     public MainForm(String login){
         setContentPane(panel1);
@@ -40,6 +44,52 @@ public class MainForm extends JFrame{
                 CreateExecutor createExecutor = new CreateExecutor(table2);
                 createExecutor.setVisible(true);
                 createExecutor.pack();
+            }
+        });
+
+        createTeamBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table1.getSelectedRow();
+                if(selectedRow>=0){
+
+                    ChosePmForm chosePmForm = new ChosePmForm(
+                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString()));
+                    chosePmForm.setVisible(true);
+                    chosePmForm.pack();
+                }else{
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Необходимо выбрать строку",
+                            "Внимание",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                }
+
+
+
+            }
+        });
+
+        showDetailsTaskBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table1.getSelectedRow();
+                if(selectedRow>=0){
+
+                    ShowDetailsTaskForm showDetailsTaskForm = null;
+                    showDetailsTaskForm = new ShowDetailsTaskForm(
+                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString()));
+                    showDetailsTaskForm.setVisible(true);
+                    showDetailsTaskForm.pack();
+                }else{
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "Необходимо выбрать строку",
+                            "Внимание",
+                            JOptionPane.WARNING_MESSAGE
+                    );
+                }
             }
         });
         
