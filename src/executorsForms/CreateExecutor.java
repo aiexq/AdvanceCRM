@@ -18,7 +18,11 @@ public class CreateExecutor extends JFrame{
     private JButton exitBtn;
     private JButton createBtn;
     private JCheckBox managerCheck;
-    private JButton testBtn;
+    private JTextField innTextField;
+    private JTextField snilsTextField;
+    private JTextField passTextField;
+    private JTextField ktoDalTextField;
+    private JTextField mestoRegTextField;
 
     public CreateExecutor(JTable table){
         setContentPane(panel1);
@@ -30,12 +34,16 @@ public class CreateExecutor extends JFrame{
                 DBHandler.openConnection();
 
                 if (managerCheck.isSelected()){
-                    DBHandler.execQuery("INSERT INTO executors (id, login, f_name, l_name, competence, password, isManager) values(null, '"+ loginTextField.getText() +"', '"+fnameTextField.getText()+"', '"+lnameTextField.getText()+"', '"+skillsTextField.getText()+"', '"+passwordTextField.getText()+"', 'True')");
+                    DBHandler.execQuery("INSERT INTO executors (id, login, f_name, l_name, competence, password, isManager, inn, snils, passport, vydan, registration) " +
+                            "values(null, '"+ loginTextField.getText() +"', '"+fnameTextField.getText()+"', '"+lnameTextField.getText()+"'," +
+                            " '"+skillsTextField.getText()+"', '"+passwordTextField.getText()+"', 'True', '"+innTextField.getText()+"', '"+ snilsTextField.getText() +"', '"+ passTextField.getText() +"'," +
+                            "'"+ ktoDalTextField.getText() +"', '"+ mestoRegTextField.getText()+"')");
                     ExecutorsTable.refreshTableExecutors(table);
                 }
                 else{
-                    DBHandler.execQuery("INSERT INTO executors (id, login, f_name, l_name, competence, password) " +
-                            "values (null, '"+ loginTextField.getText() +"', '"+fnameTextField.getText()+"', '"+lnameTextField.getText()+"', '"+skillsTextField.getText()+"', '"+passwordTextField.getText()+"')");
+                    DBHandler.execQuery("INSERT INTO executors (id, login, f_name, l_name, competence, password, inn, snils, passport, vydan, registration) " +
+                            "values (null, '"+ loginTextField.getText() +"', '"+fnameTextField.getText()+"', '"+lnameTextField.getText()+"', '"+skillsTextField.getText()+"', '"+passwordTextField.getText()+"', '"+innTextField.getText()+"', '"+ snilsTextField.getText() +"', '"+ passTextField.getText() +"'," +
+                            "'"+ ktoDalTextField.getText() +"', '"+ mestoRegTextField.getText()+"')");
                     ExecutorsTable.refreshTableExecutors(table);
                 }
 
@@ -44,12 +52,7 @@ public class CreateExecutor extends JFrame{
             }
         });
 
-        testBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                System.out.println(managerCheck.isSelected());
-            }
-        });
+
 
 
 
