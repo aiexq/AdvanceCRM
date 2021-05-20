@@ -8,9 +8,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class Generate_Document {
+
+
+
     public static void newDoc(int numDoc) throws IOException {
+
+        DBHandler.openConnection();
+
+
+
         XWPFDocument document = new XWPFDocument();
         FileOutputStream out = new FileOutputStream(new File("src/docs/outputDoc/Акт оказания услуг №"+ numDoc +".docx"));
 
@@ -25,16 +36,22 @@ public class Generate_Document {
                 " «Исполнитель», с другой стороны, именуемые в дальнейшем «Стороны», составили настоящий Акт оказания услуг " +
                 "о нижеследующем:");
 
+        XWPFRun executorData = paragraph.createRun();
+        executorData.setText("");
+
+        XWPFRun clientData = paragraph.createRun();
+        clientData.setText("");
+
         document.write(out);
         out.close();
 
-        DBHandler.openConnection();
+
         DBHandler.execQuery("UPDATE `prequest` " +
                 "set `docpath` = 'src/docs/outputDoc/Акт оказания услуг №"+ numDoc +".docx' " +
                 "where `id` = "+ numDoc+"");
         DBHandler.closeConnection();
 
 
-        System.out.println("Success!");
+
     }
 }

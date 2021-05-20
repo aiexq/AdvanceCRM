@@ -34,7 +34,7 @@ public class MainForm extends JFrame{
         setContentPane(panel1);
         FormConfig.setParams(this, "Главная", 800, 500, WindowConstants.EXIT_ON_CLOSE);
 
-        TaskTable.refreshTableTasks(table1, 0);
+        TaskTable.refreshTableTasks(table1);
         ExecutorsTable.refreshTableExecutors(table2);
         UsersTable.refreshTableUsers(table3);
 
@@ -79,7 +79,13 @@ public class MainForm extends JFrame{
 
                     ShowDetailsTaskForm showDetailsTaskForm = null;
                     showDetailsTaskForm = new ShowDetailsTaskForm(
-                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString()));
+                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString()),//idprequest
+                            table1.getValueAt(selectedRow, 1).toString(),//name
+                            table1.getValueAt(selectedRow, 2).toString(),//email
+                            table1.getValueAt(selectedRow, 3).toString(),//company
+                            table1.getValueAt(selectedRow, 4).toString(),//phone
+                            table1.getValueAt(selectedRow, 6).toString(),//docpath
+                            Integer.parseInt(table1.getValueAt(selectedRow, 7).toString()));//teamid
                     showDetailsTaskForm.setVisible(true);
                     showDetailsTaskForm.pack();
                 }else{

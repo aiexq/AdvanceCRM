@@ -48,7 +48,7 @@ public class TaskFrom extends JFrame{
         FormConfig.setParams(this, "AdvanceCRM", 800, 500, WindowConstants.EXIT_ON_CLOSE);
 
         //Обновление данных таблицы задач
-        TaskTable.refreshTableTasks(taskTable, 0);
+        TaskTable.refreshTableTasks(taskTable);
         UsersTable.refreshTableUsers(usersTable);
         ExecutorsTable.refreshTableExecutors(executorsTable);
         ServicesTable.refreshServiceTable(serviceTable);
@@ -209,7 +209,7 @@ public class TaskFrom extends JFrame{
                 if(selectedRow>=0){
                     DBHandler.openConnection();
                     DBHandler.execQuery("DELETE FROM prequest where id = '" + Integer.parseInt(taskTable.getValueAt(selectedRow,0).toString())+ "'");
-                    TaskTable.refreshTableTasks(taskTable, 0);
+                    TaskTable.refreshTableTasks(taskTable);
                     DBHandler.closeConnection();
                 }else{
                     JOptionPane.showMessageDialog(

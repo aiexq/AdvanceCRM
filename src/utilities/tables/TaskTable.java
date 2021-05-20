@@ -9,18 +9,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TaskTable {
-    public static void refreshTableTasks(JTable table, int limit){
+    public static void refreshTableTasks(JTable table){
         DBHandler.openConnection();
         ResultSet resultSet;
-        if (limit>0)
-            resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date from prequest"+ limit);
-        else
-            resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date from prequest");
+        resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date, docpath, team_id from prequest");
         setTable(resultSet,table);
     }
     private static void setTable(ResultSet resultSet, JTable table){
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"ID", "Имя заказчика", "e-mail заказчика", "Название компании заказчика", "Номер заказчика", "Дата создания заказа"});
+        model.setColumnIdentifiers(new String[]{"ID", "Имя заказчика", "e-mail заказчика", "Название компании заказчика",
+                "Номер заказчика", "Дата создания заказа", "Документ", "Команда"});
 
         try {
             while (resultSet.next()){
@@ -30,7 +28,9 @@ public class TaskTable {
                         resultSet.getString(3),
                         resultSet.getString(4),
                         resultSet.getString(5),
-                        resultSet.getString(6)
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getString(8)
                 });
             }
         } catch (SQLException throwables) {
