@@ -25,10 +25,9 @@ public class ShowDetailsTaskForm extends JFrame{
     private JLabel nullTeam;
     private JLabel nullDoc;
 
-    public ShowDetailsTaskForm(int prequest, String name, String email, String company, String phone, String docpaht, int team){
+    public ShowDetailsTaskForm(JTable table, int prequest, String name, String email, String company, String phone, String docpaht, int team){
         setContentPane(panel1);
         FormConfig.setParams(this, "Детали заказа", 400, 400, WindowConstants.DISPOSE_ON_CLOSE);
-
 
 
         createDocBtn.addActionListener(new ActionListener() {
@@ -36,10 +35,15 @@ public class ShowDetailsTaskForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 try {
                     Generate_Document.newDoc(prequest);
+                    ActiveTaskTable.refreshTableActiveTasks(table);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
+                nullDoc.setVisible(false);
+                openDocBtn.setVisible(true);
             }
+
+
         });
 
         exitBtn.addActionListener(new ActionListener() {

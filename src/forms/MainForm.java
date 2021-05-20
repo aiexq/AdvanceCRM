@@ -85,7 +85,7 @@ public class MainForm extends JFrame{
                 if(selectedRow>=0){
 
                     ShowDetailsTaskForm showDetailsTaskForm = null;
-                    showDetailsTaskForm = new ShowDetailsTaskForm(
+                    showDetailsTaskForm = new ShowDetailsTaskForm(table1,
                             Integer.parseInt(table1.getValueAt(selectedRow,0).toString()),//idprequest
                             table1.getValueAt(selectedRow, 1).toString(),//name
                             table1.getValueAt(selectedRow, 2).toString(),//email
