@@ -1,17 +1,16 @@
 package forms;
 
-import createTeam.ChoseDevForm;
 import createTeam.ChosePmForm;
 import executorsForms.CreateExecutor;
 import utilities.configFiles.FormConfig;
 import utilities.tables.ExecutorsTable;
-import utilities.tables.TaskTable;
+import utilities.tables.ActiveTaskTable;
+import utilities.tables.NewTaskTable;
 import utilities.tables.UsersTable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 
 public class MainForm extends JFrame{
     private JPanel panel1;
@@ -29,14 +28,17 @@ public class MainForm extends JFrame{
     private JButton посмотретьДанныеButton1;
     private JButton showDetailsTaskBtn;
     private JButton createTeamBtn;
+    private JTable table5;
+    private JButton checkTaskBtn;
 
     public MainForm(String login){
         setContentPane(panel1);
         FormConfig.setParams(this, "Главная", 800, 500, WindowConstants.EXIT_ON_CLOSE);
 
-        TaskTable.refreshTableTasks(table1);
+        ActiveTaskTable.refreshTableActiveTasks(table1);
         ExecutorsTable.refreshTableExecutors(table2);
         UsersTable.refreshTableUsers(table3);
+        NewTaskTable.refreshTableNewTasks(table5);
 
         createExecutorButton.addActionListener(new ActionListener() {
             @Override
@@ -50,13 +52,18 @@ public class MainForm extends JFrame{
         createTeamBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int selectedRow = table1.getSelectedRow();
+                int selectedRow = table5.getSelectedRow();
                 if(selectedRow>=0){
 
                     ChosePmForm chosePmForm = new ChosePmForm(
-                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString()));
+                            table1,//Таблица активных заказов
+                            table5,//таблица новых заказов
+                            Integer.parseInt(table5.getValueAt(selectedRow,0).toString())
+                    );
                     chosePmForm.setVisible(true);
                     chosePmForm.pack();
+//
+
                 }else{
                     JOptionPane.showMessageDialog(
                             null,

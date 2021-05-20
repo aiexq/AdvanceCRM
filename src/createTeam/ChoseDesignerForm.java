@@ -12,7 +12,7 @@ public class ChoseDesignerForm extends JFrame{
     private JTable table1;
     private JButton button1;
 
-    public ChoseDesignerForm(int prequest, int projectManager, int developer){
+    public ChoseDesignerForm(JTable tableActive, JTable tableNew, int prequest, int projectManager, int developer){
         setContentPane(panel1);
         FormConfig.setParams(this, "Выбор дизайнера", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
         ExecutorsDesignTable.refreshTableExecutorsDesign(table1);
@@ -23,11 +23,14 @@ public class ChoseDesignerForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
                 if(selectedRow>=0){
-//                    ChoseDesignerForm choseDesignerForm = new ChoseDesignerForm(projectManager,
-//                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString()));
-//                    choseDesignerForm.setVisible(true);
-//                    choseDesignerForm.pack();
-                    AcceptTeamForm acceptTeamForm = new AcceptTeamForm(prequest, projectManager, developer, Integer.parseInt(table1.getValueAt(selectedRow,0).toString()));
+                    AcceptTeamForm acceptTeamForm = new AcceptTeamForm(
+                            tableActive,
+                            tableNew,
+                            prequest,
+                            projectManager,
+                            developer,
+                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString())
+                    );
                     acceptTeamForm.setVisible(true);
                     acceptTeamForm.pack();
                     dispose();

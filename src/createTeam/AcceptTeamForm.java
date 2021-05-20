@@ -2,6 +2,8 @@ package createTeam;
 
 import utilities.configFiles.DBHandler;
 import utilities.configFiles.FormConfig;
+import utilities.tables.ActiveTaskTable;
+import utilities.tables.NewTaskTable;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -15,7 +17,7 @@ public class AcceptTeamForm extends JFrame{
     private JLabel designLabel;
     private JLabel prequestLabel;
 
-    public AcceptTeamForm(int prequest, int projectManager, int developer, int designer){
+    public AcceptTeamForm(JTable tableActive, JTable tableNew, int prequest, int projectManager, int developer, int designer){
         setContentPane(panel1);
         FormConfig.setParams(this, "Утвердить команду", 400, 250, WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -30,8 +32,13 @@ public class AcceptTeamForm extends JFrame{
                 DBHandler.openConnection();
                 DBHandler.execQuery("INSERT INTO teams (id, pm_id, dev_id, designer_id, prequest_id) " +
                         "values (null, '" +projectManager+ "', '"+developer+"', '"+designer+"', '"+prequest+"')");
+                DBHandler.execQuery("Update prequest set team_id = 0 where id = "+prequest);
                 DBHandler.closeConnection();
                 dispose();
+
+                ActiveTaskTable.refreshTableActiveTasks(tableActive);
+                NewTaskTable.refreshTableNewTasks(tableNew);
+
             }
         });
 

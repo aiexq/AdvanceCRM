@@ -14,7 +14,7 @@ public class ChoseDevForm extends JFrame{
     private JTable table1;
     private JButton choseBtn;
 
-    public ChoseDevForm(int prequest, int projectManager){
+    public ChoseDevForm(JTable tableActive, JTable tableNew, int prequest, int projectManager){
         setContentPane(panel1);
         FormConfig.setParams(this, "Выбор разработчика", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -25,8 +25,13 @@ public class ChoseDevForm extends JFrame{
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table1.getSelectedRow();
                 if(selectedRow>=0){
-                    ChoseDesignerForm choseDesignerForm = new ChoseDesignerForm(prequest, projectManager,
-                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString()));
+                    ChoseDesignerForm choseDesignerForm = new ChoseDesignerForm(
+                            tableActive,
+                            tableNew,
+                            prequest,
+                            projectManager,
+                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString())
+                    );
                     choseDesignerForm.setVisible(true);
                     choseDesignerForm.pack();
                     dispose();

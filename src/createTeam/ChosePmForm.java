@@ -13,7 +13,7 @@ public class ChosePmForm extends JFrame{
     private JTable table1;
     private JButton choseBtn;
 
-    public ChosePmForm(int prequest){
+    public ChosePmForm(JTable tableActive, JTable tableNew, int prequest){
         setContentPane(panel1);
         FormConfig.setParams(this, "Выбор менеджера", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
         ExecutorsPmTable.refreshTableExecutorsPm(table1);
@@ -25,8 +25,12 @@ public class ChosePmForm extends JFrame{
                 int selectedRow = table1.getSelectedRow();
                 if(selectedRow>=0){
 
-                    ChoseDevForm choseDevForm = new ChoseDevForm(prequest,
-                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString()));
+                    ChoseDevForm choseDevForm = new ChoseDevForm(
+                            tableActive,
+                            tableNew,
+                            prequest,
+                            Integer.parseInt(table1.getValueAt(selectedRow,0).toString())
+                    );
                     choseDevForm.setVisible(true);
                     choseDevForm.pack();
                     dispose();
