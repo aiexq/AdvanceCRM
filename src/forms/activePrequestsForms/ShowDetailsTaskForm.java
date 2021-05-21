@@ -1,9 +1,10 @@
-package forms;
+package forms.activePrequestsForms;
 
 import docs.Generate_Document;
 import docs.Open_Document;
 import docs.tables.TeamOnTaskTable;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import utilities.configFiles.DBHandler;
 import utilities.configFiles.FormConfig;
 import utilities.tables.ActiveTaskTable;
 
@@ -11,6 +12,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ShowDetailsTaskForm extends JFrame{
     private JPanel panel1;
@@ -68,13 +71,31 @@ public class ShowDetailsTaskForm extends JFrame{
         openDocBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                    Open_Document.openDoc(docpaht);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
+
+                try{
+                    DBHandler.openConnection();
+                    ResultSet rs = DBHandler.execQuery("SELECT docpath from prequest where id = "+ prequest);
+                    while (rs.next()){
+                        String path = rs.getString(1);
+                        Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler D:/Users/Admin/IdeaProjects/democrm_admin/" + path);
+                        p.waitFor();
+                    }
+                    DBHandler.closeConnection();
+                } catch (SQLException | InterruptedException | IOException throwables){
+                    throwables.printStackTrace();
                 }
+
+
+
+            }
+        });
+
+        openTeamBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ShowTeamOnPrequest showTeamOnPrequest = new ShowTeamOnPrequest(prequest);
+                showTeamOnPrequest.setVisible(true);
+                showTeamOnPrequest.pack();
             }
         });
 

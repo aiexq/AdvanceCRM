@@ -2,6 +2,7 @@ package forms;
 
 import createTeam.ChosePmForm;
 import executorsForms.CreateExecutor;
+import forms.activePrequestsForms.ShowDetailsTaskForm;
 import utilities.configFiles.FormConfig;
 import utilities.tables.ExecutorsTable;
 import utilities.tables.ActiveTaskTable;
@@ -19,10 +20,6 @@ public class MainForm extends JFrame{
     private JTable table2;
     private JTable table3;
     private JButton createExecutorButton;
-    private JTable table4;
-    private JButton создатьКомандуButton;
-    private JButton удалитьКомандуButton;
-    private JButton посмотретьДанныеButton;
     private JButton редактироватьИсполнителяButton;
     private JButton назначитьВКомандуButton;
     private JButton посмотретьДанныеButton1;
@@ -62,6 +59,8 @@ public class MainForm extends JFrame{
                     );
                     chosePmForm.setVisible(true);
                     chosePmForm.pack();
+
+
 //
 
                 }else{
@@ -77,6 +76,7 @@ public class MainForm extends JFrame{
 
             }
         });
+
 
         showDetailsTaskBtn.addActionListener(new ActionListener() {
             @Override

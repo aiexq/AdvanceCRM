@@ -2,6 +2,7 @@ package createTeam;
 
 import createTeam.tables.ExecutorsPmTable;
 import executorsForms.ExecutorTasksForm;
+import utilities.configFiles.DBHandler;
 import utilities.configFiles.FormConfig;
 
 import javax.swing.*;
@@ -17,6 +18,8 @@ public class ChosePmForm extends JFrame{
         setContentPane(panel1);
         FormConfig.setParams(this, "Выбор менеджера", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
         ExecutorsPmTable.refreshTableExecutorsPm(table1);
+
+
 
         choseBtn.addActionListener(new ActionListener() {
             @Override

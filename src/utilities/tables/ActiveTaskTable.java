@@ -12,7 +12,7 @@ public class ActiveTaskTable {
     public static void refreshTableActiveTasks(JTable table){
         DBHandler.openConnection();
         ResultSet resultSet;
-        resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date, docpath, team_id from prequest where team_id is not null");
+        resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date, docpath, inProcess from prequest where inProcess is not null");
         setTable(resultSet,table);
     }
     private static void setTable(ResultSet resultSet, JTable table){

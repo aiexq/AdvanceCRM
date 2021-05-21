@@ -3,6 +3,7 @@ package createTeam;
 import createTeam.tables.ExecutorsDevTable;
 import createTeam.tables.ExecutorsPmTable;
 import executorsForms.ExecutorTasksForm;
+import utilities.configFiles.DBHandler;
 import utilities.configFiles.FormConfig;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class ChoseDevForm extends JFrame{
         FormConfig.setParams(this, "Выбор разработчика", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
 
         ExecutorsDevTable.refreshTableExecutorsDev(table1);
+
 
         choseBtn.addActionListener(new ActionListener() {
             @Override

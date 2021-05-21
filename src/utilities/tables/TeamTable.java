@@ -7,17 +7,18 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class NewTaskTable {
-    public static void refreshTableNewTasks(JTable table){
+public class TeamTable {
+    //SELECT executors.f_name, executors.l_name, executors.competence, executors.isManager, teams.role FROM teams, prequest, executors WHERE prequest.id = prequest_id and executors.id = executor_id and prequest_id = 50
+    public static void refreshTableTeam(JTable table, int prequest){
         DBHandler.openConnection();
         ResultSet resultSet;
-        resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date from prequest where inProcess is null");
+        resultSet = DBHandler.execQuery("SELECT executors.f_name, executors.l_name, executors.competence, teams.role FROM teams, prequest, executors WHERE prequest.id = prequest_id and executors.id = executor_id and prequest_id = "+ prequest);
         setTable(resultSet,table);
     }
     private static void setTable(ResultSet resultSet, JTable table){
+
         DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"ID", "Имя заказчика", "e-mail заказчика", "Название компании заказчика",
-                "Номер заказчика", "Дата создания заказа"});
+        model.setColumnIdentifiers(new String[]{"Фамилия", "Имя", "Компетенция", "Роль"});
 
         try {
             while (resultSet.next()){
@@ -25,9 +26,7 @@ public class NewTaskTable {
                         resultSet.getString(1),
                         resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4),
-                        resultSet.getString(5),
-                        resultSet.getString(6)
+                        resultSet.getString(4)
                 });
             }
         } catch (SQLException throwables) {

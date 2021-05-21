@@ -8,6 +8,7 @@ import utilities.tables.NewTaskTable;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
 public class AcceptTeamForm extends JFrame{
     private JPanel panel1;
@@ -21,6 +22,7 @@ public class AcceptTeamForm extends JFrame{
         setContentPane(panel1);
         FormConfig.setParams(this, "Утвердить команду", 400, 250, WindowConstants.DISPOSE_ON_CLOSE);
 
+
         pmLabel.setText(String.valueOf(projectManager));
         devLabel.setText(String.valueOf(developer));
         designLabel.setText(String.valueOf(designer));
@@ -29,10 +31,12 @@ public class AcceptTeamForm extends JFrame{
         acceptBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
                 DBHandler.openConnection();
-                DBHandler.execQuery("INSERT INTO teams (id, pm_id, dev_id, designer_id, prequest_id) " +
-                        "values (null, '" +projectManager+ "', '"+developer+"', '"+designer+"', '"+prequest+"')");
-                DBHandler.execQuery("Update prequest set team_id = 0 where id = "+prequest);
+                DBHandler.execQuery("INSERT into teams (id, prequest_id, executor_id, role) values (null, + "+ prequest +", "+ projectManager +", 'pm')");
+                DBHandler.execQuery("INSERT into teams (id, prequest_id, executor_id, role) values (null, + "+ prequest +", "+ developer +", 'dev')");
+                DBHandler.execQuery("INSERT into teams (id, prequest_id, executor_id, role) values (null, + "+ prequest +", "+ designer +", 'des')");
+                DBHandler.execQuery("UPDATE prequest set inProcess = " + projectManager + " where id = "+ prequest +"");
                 DBHandler.closeConnection();
                 dispose();
 

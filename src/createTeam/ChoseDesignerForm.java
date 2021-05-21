@@ -1,6 +1,7 @@
 package createTeam;
 
 import createTeam.tables.ExecutorsDesignTable;
+import utilities.configFiles.DBHandler;
 import utilities.configFiles.FormConfig;
 
 import javax.swing.*;
@@ -16,6 +17,7 @@ public class ChoseDesignerForm extends JFrame{
         setContentPane(panel1);
         FormConfig.setParams(this, "Выбор дизайнера", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
         ExecutorsDesignTable.refreshTableExecutorsDesign(table1);
+
 
 
         button1.addActionListener(new ActionListener() {
