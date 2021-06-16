@@ -12,7 +12,7 @@ public class ExecutorsDesignTable {
         DBHandler.openConnection();
         ResultSet resultSet;
 
-        resultSet = DBHandler.execQuery("SELECT id, login, f_name, l_name, competence from executors where isManager != 'True'");
+        resultSet = DBHandler.execQuery("SELECT id, login, f_name, l_name, competence from executors where isManager = 0");
 
         setTable(resultSet,table);
     }

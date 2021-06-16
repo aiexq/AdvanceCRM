@@ -13,29 +13,30 @@ public class Auth {
         ResultSet resultSet;
 
 
-        resultSet = DBHandler.execQuery("SELECT id, name, password from admin where name = '"
-                + login + "' and password = '" + String.valueOf(password) + "'");
 
-        DefaultTableModel model = new DefaultTableModel();
-        model.setColumnIdentifiers(new String[]{"ID", "Логин", "Пароль"});
+        resultSet = DBHandler.execQuery("SELECT count(*) from executors where login = '"+login+"' and password = '"+ String.valueOf(password) + "'  ");
+
+
 
         try {
             while (resultSet.next()){
-                model.addRow(new String[]{
-                        resultSet.getString(1),
-                        resultSet.getString(2),
-                        resultSet.getString(3)
-                });
+                int count = resultSet.getInt(1);
+
+                if (count > 0 & count < 2){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
+
         }
-        table1.setModel(model);
-
-        return table1.getRowCount() > 0 && table1.getRowCount() < 2;
 
 
-
+        return false;
     }
 
 

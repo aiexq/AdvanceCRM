@@ -16,7 +16,7 @@ public class ChosePmForm extends JFrame{
 
     public ChosePmForm(JTable tableActive, JTable tableNew, int prequest){
         setContentPane(panel1);
-        FormConfig.setParams(this, "Выбор менеджера", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
+        FormConfig.setParams(this, "Выбор менеджера", 350, 350, WindowConstants.DISPOSE_ON_CLOSE);
         ExecutorsPmTable.refreshTableExecutorsPm(table1);
 
 

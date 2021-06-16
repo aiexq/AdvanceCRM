@@ -1,9 +1,6 @@
-package forms.activePrequestsForms;
+package forms.prequestsForms;
 
-import docs.Generate_Document;
-import docs.Open_Document;
-import docs.tables.TeamOnTaskTable;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import docs.Generate_Act;
 import utilities.configFiles.DBHandler;
 import utilities.configFiles.FormConfig;
 import utilities.tables.ActiveTaskTable;
@@ -28,20 +25,56 @@ public class ShowDetailsTaskForm extends JFrame{
     private JLabel nullTeam;
     private JLabel nullDoc;
 
-    public ShowDetailsTaskForm(JTable table, int prequest, String name, String email, String company, String phone, String docpaht, int team){
+    public ShowDetailsTaskForm(JTable table, int prequest, int isAdmin, int isManager) throws SQLException {
         setContentPane(panel1);
         FormConfig.setParams(this, "Детали заказа", 400, 400, WindowConstants.DISPOSE_ON_CLOSE);
 
+        if (isManager == 0 & isAdmin == 0){
+            createDocBtn.setVisible(false);
+        }
+
+
+        DBHandler.openConnection();
+
+        ResultSet identifiers;
+
+        identifiers = DBHandler.execQuery("SELECT name, email, company, contactno, docpath FROM prequest where id = "+prequest+" and inProcess is not null");
+
+
+
+        while (identifiers.next()){
+            String name = identifiers.getString(1);
+            String email = identifiers.getString(2);
+            String company = identifiers.getString(3);
+            String phone = identifiers.getString(4);
+            String docpaht = identifiers.getString(5);
+
+            clienNameLabel.setText(name);
+            emailClientLabel.setText(email);
+            phoneClientLabel.setText(phone);
+            companyClirentLabel.setText(company);
+
+            if (docpaht != null){
+                nullDoc.setVisible(true);
+                openDocBtn.setVisible(false);
+            }
+            else {
+                createDocBtn.setVisible(false);
+            }
+        }
+
+        DBHandler.closeConnection();
 
         createDocBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Generate_Document.newDoc(prequest);
+                    Generate_Act.newAct(prequest);
                     ActiveTaskTable.refreshTableActiveTasks(table);
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
                 }
+                createDocBtn.setVisible(false);
                 nullDoc.setVisible(false);
                 openDocBtn.setVisible(true);
             }
@@ -55,18 +88,7 @@ public class ShowDetailsTaskForm extends JFrame{
                 dispose();
             }
         });
-        clienNameLabel.setText(name);
-        emailClientLabel.setText(email);
-        phoneClientLabel.setText(phone);
-        companyClirentLabel.setText(company);
 
-        if (docpaht.equals("")){
-            nullDoc.setVisible(true);
-            openDocBtn.setVisible(false);
-        }
-        else {
-            createDocBtn.setVisible(false);
-        }
 
         openDocBtn.addActionListener(new ActionListener() {
             @Override
@@ -74,7 +96,7 @@ public class ShowDetailsTaskForm extends JFrame{
 
                 try{
                     DBHandler.openConnection();
-                    ResultSet rs = DBHandler.execQuery("SELECT docpath from prequest where id = "+ prequest);
+                    ResultSet rs = DBHandler.execQuery("SELECT actpath from prequest where id = "+ prequest);
                     while (rs.next()){
                         String path = rs.getString(1);
                         Process p = Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler D:/Users/Admin/IdeaProjects/democrm_admin/" + path);

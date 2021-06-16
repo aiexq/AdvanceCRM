@@ -36,7 +36,7 @@ public class CreateExecutor extends JFrame{
                 if (managerCheck.isSelected()){
                     DBHandler.execQuery("INSERT INTO executors (id, login, f_name, l_name, competence, password, isManager, inn, snils, passport, vydan, registration) " +
                             "values(null, '"+ loginTextField.getText() +"', '"+fnameTextField.getText()+"', '"+lnameTextField.getText()+"'," +
-                            " '"+skillsTextField.getText()+"', '"+passwordTextField.getText()+"', 'True', '"+innTextField.getText()+"', '"+ snilsTextField.getText() +"', '"+ passTextField.getText() +"'," +
+                            " '"+skillsTextField.getText()+"', '"+passwordTextField.getText()+"', 1, '"+innTextField.getText()+"', '"+ snilsTextField.getText() +"', '"+ passTextField.getText() +"'," +
                             "'"+ ktoDalTextField.getText() +"', '"+ mestoRegTextField.getText()+"')");
                     ExecutorsTable.refreshTableExecutors(table);
                 }

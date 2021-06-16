@@ -1,6 +1,5 @@
 package utilities.tables;
 
-
 import utilities.configFiles.DBHandler;
 
 import javax.swing.*;
@@ -8,25 +7,18 @@ import javax.swing.table.DefaultTableModel;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ActiveTaskTable {
-    public static void refreshTableActiveTasks(JTable table, int pm){
+public class FinalTaskTable {
+    public static void refreshTableFinalTasks(JTable table){
         DBHandler.openConnection();
         ResultSet resultSet;
-        resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date, actpath, inProcess from prequest where inProcess = "+ pm +" and status = 'Принят к исполнению'");
+        resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date, docpath, actpath, inProcess from prequest where inProcess is not null and status = 'Завершен'");
         setTable(resultSet,table);
     }
 
-    public static void refreshTableActiveTasks(JTable table){
+    public static void refreshTableFinalTasksForExecutor(JTable table, int id){
         DBHandler.openConnection();
         ResultSet resultSet;
-        resultSet = DBHandler.execQuery("SELECT id, name, email, company, contactno, posting_date, actpath, inProcess from prequest where inProcess is not null and status = 'Принят к исполнению'");
-        setTable(resultSet,table);
-    }
-
-    public static void refreshTableActiveTasksForExecutor(JTable table, int managerId){
-        DBHandler.openConnection();
-        ResultSet resultSet;
-        resultSet = DBHandler.execQuery("SELECT DISTINCT prequest.id, prequest.name, prequest.email, prequest.contactno, prequest.company, prequest.posting_date, executors.id FROM prequest, executors, teams where teams.prequest_id = prequest.id and teams.executor_id = executors.id and status = 'Принят к исполнению' and teams.executor_id = " + managerId );
+        resultSet = DBHandler.execQuery("SELECT DISTINCT prequest.id, prequest.name, prequest.email, prequest.contactno, prequest.company, prequest.posting_date, executors.id FROM prequest, executors, teams where teams.prequest_id = prequest.id and teams.executor_id = executors.id and status = 'Завершен' and teams.executor_id = " + id );
         setTable(resultSet,table);
     }
 
@@ -53,5 +45,4 @@ public class ActiveTaskTable {
 
         DBHandler.closeConnection();
     }
-
 }

@@ -17,7 +17,7 @@ public class ChoseDevForm extends JFrame{
 
     public ChoseDevForm(JTable tableActive, JTable tableNew, int prequest, int projectManager){
         setContentPane(panel1);
-        FormConfig.setParams(this, "Выбор разработчика", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
+        FormConfig.setParams(this, "Выбор разработчика", 350, 350, WindowConstants.DISPOSE_ON_CLOSE);
 
         ExecutorsDevTable.refreshTableExecutorsDev(table1);
 

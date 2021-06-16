@@ -1,4 +1,4 @@
-package forms.activePrequestsForms;
+package forms.prequestsForms;
 
 import utilities.configFiles.FormConfig;
 import utilities.tables.TeamTable;

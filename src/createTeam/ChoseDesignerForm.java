@@ -15,7 +15,7 @@ public class ChoseDesignerForm extends JFrame{
 
     public ChoseDesignerForm(JTable tableActive, JTable tableNew, int prequest, int projectManager, int developer){
         setContentPane(panel1);
-        FormConfig.setParams(this, "Выбор дизайнера", 350, 200, WindowConstants.DISPOSE_ON_CLOSE);
+        FormConfig.setParams(this, "Выбор дизайнера", 350, 350, WindowConstants.DISPOSE_ON_CLOSE);
         ExecutorsDesignTable.refreshTableExecutorsDesign(table1);
 
 

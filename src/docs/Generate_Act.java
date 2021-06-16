@@ -12,18 +12,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
-public class Generate_Document {
+public class Generate_Act {
 
 
 
-    public static void newDoc(int numDoc) throws IOException {
+    public static void newAct(int numDoc) throws IOException {
 
         DBHandler.openConnection();
 
 
 
         XWPFDocument document = new XWPFDocument();
-        FileOutputStream out = new FileOutputStream(new File("src/docs/outputDoc/Акт оказания услуг №"+ numDoc +".docx"));
+        FileOutputStream out = new FileOutputStream(new File("src/docs/outputAct/Смета по заказу №"+ numDoc +".docx"));
 
         XWPFParagraph paragraph = document.createParagraph();
 
@@ -31,8 +31,8 @@ public class Generate_Document {
         title.setText("Акт оказания услуг №"+numDoc);
 
         XWPFRun entry = paragraph.createRun();
-        entry.setText("Общество с ограниченной ответственностью «ММИР.ПРО», именуемое в дальнейшем «Заказчик», в лице " +
-                "Генерального директора Салихова Артема Викторовича и Савин Михаил Александрович, именуемый в дальнейшем" +
+        entry.setText("Общество с ограниченной ответственностью ..., именуемое в дальнейшем «Заказчик», в лице " +
+                "Генерального директора ... и ..., именуемый в дальнейшем" +
                 " «Исполнитель», с другой стороны, именуемые в дальнейшем «Стороны», составили настоящий Акт оказания услуг " +
                 "о нижеследующем:");
 
@@ -47,7 +47,10 @@ public class Generate_Document {
 
 
         DBHandler.execQuery("UPDATE `prequest` " +
-                "set `docpath` = 'src/docs/outputDoc/Акт оказания услуг №"+ numDoc +".docx' " +
+                "set `actpath` = 'src/docs/outputAct/Смета по заказу №"+ numDoc +".docx' " +
+                "where `id` = "+ numDoc+"");
+        DBHandler.execQuery("UPDATE `prequest` " +
+                "set changeDate = null " +
                 "where `id` = "+ numDoc+"");
         DBHandler.closeConnection();
 

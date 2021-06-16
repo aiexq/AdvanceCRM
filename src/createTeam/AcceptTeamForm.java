@@ -20,7 +20,7 @@ public class AcceptTeamForm extends JFrame{
 
     public AcceptTeamForm(JTable tableActive, JTable tableNew, int prequest, int projectManager, int developer, int designer){
         setContentPane(panel1);
-        FormConfig.setParams(this, "Утвердить команду", 400, 250, WindowConstants.DISPOSE_ON_CLOSE);
+        FormConfig.setParams(this, "Утвердить команду", 400, 400, WindowConstants.DISPOSE_ON_CLOSE);
 
 
         pmLabel.setText(String.valueOf(projectManager));
@@ -37,6 +37,7 @@ public class AcceptTeamForm extends JFrame{
                 DBHandler.execQuery("INSERT into teams (id, prequest_id, executor_id, role) values (null, + "+ prequest +", "+ developer +", 'dev')");
                 DBHandler.execQuery("INSERT into teams (id, prequest_id, executor_id, role) values (null, + "+ prequest +", "+ designer +", 'des')");
                 DBHandler.execQuery("UPDATE prequest set inProcess = " + projectManager + " where id = "+ prequest +"");
+                DBHandler.execQuery("UPDATE prequest set status = 'Принят к исполнению' where id = "+ prequest);
                 DBHandler.closeConnection();
                 dispose();
 
